@@ -116,9 +116,12 @@ def inject_site_globals():
 
     country = (country or DEFAULT_COUNTRY).lower()
 
+    currency = CURRENCY_BY_COUNTRY.get(country, "USD")
+
     return {
         "country": country,
         "country_flags": COUNTRY_FLAGS,
+        "currency": currency,
     }
 
 
@@ -203,7 +206,7 @@ def timeago(dt):
 
 @bp.route("/")
 def index():
-    preferred = request.cookies.get("preferred_country")
+    preferred = request.cookies.get("country")
     valid_countries = set(get_enabled_markets().keys())
 
     if preferred:
@@ -315,10 +318,7 @@ def country_home(country):
         pagination=pagination,
         sort=sort,
         direction=direction,
-        country=country,
         filters=filters_ordered,
-        currency=currency,
-        country_flags=COUNTRY_FLAGS,
     )
 
 
@@ -336,9 +336,6 @@ def model_page(country, model_slug):
         return render_template(
             "search.html",
             query=model_slug,
-            country=country,
-            currency=currency,
-            country_flags=COUNTRY_FLAGS,
         )
 
     stats = canonical_model_stats(model.id, marketplaces)
@@ -376,9 +373,6 @@ def model_page(country, model_slug):
         return render_template(
             "search.html",
             query=model.name,
-            country=country,
-            currency=currency,
-            country_flags=COUNTRY_FLAGS,
         )
 
     return render_template(
@@ -387,11 +381,8 @@ def model_page(country, model_slug):
         pagination=pagination,
         sort=sort,
         direction=direction,
-        country=country,
         model_slug=model.slug,
         model_name=model.name,
-        currency=currency,
-        country_flags=COUNTRY_FLAGS,
         stats=stats,
     )
 
@@ -589,9 +580,6 @@ def deals(country):
         pagination=pagination,
         sort=sort,
         direction=direction,
-        country=country,
-        currency=currency,
-        country_flags=COUNTRY_FLAGS,
         best_deal_model_ids=best_deal_model_ids,
         price_drop_model_ids=price_drop_model_ids,
     )
@@ -679,9 +667,6 @@ def price_drops(country):
         pagination=pagination,
         sort=sort,
         direction=direction,
-        country=country,
-        currency=currency,
-        country_flags=COUNTRY_FLAGS,
     )
 
 
@@ -778,9 +763,6 @@ def best_deals(country):
         pagination=pagination,
         sort=sort,
         direction=direction,
-        country=country,
-        currency=currency,
-        country_flags=COUNTRY_FLAGS,
     )
 
 @bp.route("/<country>/thinkpad_models")
@@ -840,9 +822,6 @@ def thinkpad_models(country):
         "thinkpad_models.html",
         grouped_models=grouped_models,
         series_order=series_order,
-        country=country,
-        currency=currency,
-        country_flags=COUNTRY_FLAGS,
     )
 
 @bp.route("/about")
@@ -948,10 +927,7 @@ def best_under_300(country):
         pagination=pagination,
         sort=sort,
         direction=direction,
-        country=country,
         filters={},  # can improve later
-        currency=currency,
-        country_flags=COUNTRY_FLAGS,
     )
 
 @bp.route("/<country>/compare/t480-vs-t490/")
@@ -982,8 +958,6 @@ def compare_t480_t490(country):
         listings_b=listings_b,
         stats_a=stats_a,
         stats_b=stats_b,
-        country=country,
-        currency=currency,
     )
 
 @bp.route("/<country>/guides/t-series-vs-x-series/")
@@ -992,6 +966,4 @@ def guide_t_vs_x(country):
 
     return render_template(
         "guide_t_vs_x.html",
-        country=country,
-        currency=currency,
     )
