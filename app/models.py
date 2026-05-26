@@ -235,3 +235,8 @@ class Storage(db.Model):
     size = db.Column(db.String(20), unique=True, nullable=False)
 
 
+class Blacklist(db.Model):
+    __tablename__ = "blacklist"
+
+    id = db.Column(db.Integer, primary_key=True)
+    phrase = db.Column(db.String(255), unique=True, nullable=False, index=True)
