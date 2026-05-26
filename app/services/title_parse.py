@@ -229,11 +229,17 @@ def format_cpu_match(value):
 
     return result
 
+
 def extract_cpu_num(title):
     if not title:
         return None
 
     title = title.upper()
+
+    # Intel full match first
+    match = re.search(r"\b(I[3579][\-\s]?\d{4,5}[A-Z]{1,3})\b", title)
+    if match:
+        return match.group(1).replace(" ", "")
 
     match = re.search(r"\b(\d{3,5}[A-Z]{1,2}\d?)\b", title)
     if match:
