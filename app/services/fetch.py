@@ -36,7 +36,7 @@ def get_token():
     return resp.json()["access_token"]
 
 
-def get_paginated_summaries(query="thinkpad", limit=200, maximum_items=400):
+def get_paginated_summaries(query="thinkpad", limit=200, maximum_items=800):
     """Fetch item summaries with pagination across marketplaces."""
 
     token = get_token()
