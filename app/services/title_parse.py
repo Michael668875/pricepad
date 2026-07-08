@@ -128,7 +128,14 @@ def process_title():
 
     cpu_lookup = build_cpu_lookup()   
     
-    for listing in Listing.query.yield_per(500):
+    for listing in (
+        Listing.query
+        .filter(
+            Listing.status == "ACTIVE",
+            Listing.ended_at.is_(None)
+        )
+        .yield_per(500)
+    ):
         insert_model_from_title(db.session, listing, known_models, sorted_models)
 
         ram, storage = find_memory(listing.title)

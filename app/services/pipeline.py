@@ -19,55 +19,6 @@ def insert_models(): # turn this off
         );
     """))
 
-# add detailed specs from temp to main table.
-def insert_specs(): # turn this off
-    """
-    Insert specs from temp details
-    """
-    db.session.execute(text(r"""
-        INSERT INTO specs (
-            cpu,
-            cpu_freq,
-            raw_ram,
-            raw_storage,
-            raw_storage_type,
-            screen_size,
-            display,
-            gpu,
-            os,
-            listing_id,
-            ram_processed,
-            storage_processed,
-            storage_type_processed
-        )
-        SELECT
-            td.cpu,
-            td.cpu_freq,
-            td.ram,
-            td.storage,         
-            td.storage_type,
-            td.screen_size,
-            td.display,
-            td.gpu,
-            td.os,
-            l.id,
-            FALSE,
-            FALSE,
-            FALSE
-        FROM temp_details td
-        JOIN listings l
-        ON l.ebay_item_id = td.ebay_item_id
-        WHERE l.category_id = '177'
-        ON CONFLICT (listing_id) 
-        DO UPDATE SET
-        ram = COALESCE(EXCLUDED.ram, specs.ram),
-        storage = COALESCE(EXCLUDED.storage, specs.storage),
-        cpu = COALESCE(EXCLUDED.cpu, specs.cpu),
-        cpu_freq = COALESCE(EXCLUDED.cpu_freq, specs.cpu_freq),
-        raw_ram = EXCLUDED.raw_ram,
-        raw_storage = EXCLUDED.raw_storage,
-        raw_storage_type = EXCLUDED.raw_storage_type;
-    """))
 
 # add summaries from temp tabel into main listings table
 def insert_listings():
@@ -277,8 +228,6 @@ def run_pipeline():
     mark_ended_listings()
     insert_price_history()
     update_model_price_stats()
-    #insert_specs()
-    #insert_storage_type() # gets storage_type from raw_storage_type    
 
     db.session.commit()
 
