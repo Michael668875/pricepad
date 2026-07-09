@@ -237,27 +237,52 @@ def format_cpu_match(value):
     return result
 
 
-def extract_cpu_num(title):
+# def extract_cpu_num(title):
+#     if not title:
+#         return None
+
+#     title = title.upper()
+
+#     # Intel full match first
+#     match = re.search(r"\b(I[3579][\-\s]?\d{4,5}[A-Z]{1,3})\b", title)
+#     if match:
+#         return match.group(1).replace(" ", "")
+
+#     match = re.search(r"\b(\d{3,5}[A-Z]{1,2}\d?)\b", title)
+#     if match:
+#         return match.group(1)
+
+#     match = re.search(r"\b([A-Z]\d{3,5}[A-Z]?)\b", title)
+#     if match:
+#         return match.group(1)
+
+#     return None
+
+
+def extract_cpu_num(title, cpu_lookup):
     if not title:
         return None
 
     title = title.upper()
 
-    # Intel full match first
+    # Intel i-series
     match = re.search(r"\b(I[3579][\-\s]?\d{4,5}[A-Z]{1,3})\b", title)
     if match:
         return match.group(1).replace(" ", "")
 
-    match = re.search(r"\b(\d{3,5}[A-Z]{1,2}\d?)\b", title)
-    if match:
-        return match.group(1)
+    # Check known CPU numbers from database
+    candidates = re.findall(r"\b[A-Z]?\d{3,5}[A-Z]{0,3}\b", title)
 
+    for candidate in candidates:
+        if candidate in cpu_lookup:
+            return candidate
+
+    # Last fallback 
     match = re.search(r"\b([A-Z]\d{3,5}[A-Z]?)\b", title)
     if match:
         return match.group(1)
 
     return None
-
 
 def resolve_cpu_from_title(title, cpu_lookup):
     cpu_num = extract_cpu_num(title)
