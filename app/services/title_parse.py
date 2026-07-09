@@ -285,7 +285,7 @@ def extract_cpu_num(title, cpu_lookup):
     return None
 
 def resolve_cpu_from_title(title, cpu_lookup):
-    cpu_num = extract_cpu_num(title)
+    cpu_num = extract_cpu_num(title, cpu_lookup)
     if cpu_num and cpu_num in cpu_lookup:
         return cpu_lookup[cpu_num]
 
