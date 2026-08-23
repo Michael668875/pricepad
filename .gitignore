@@ -8,3 +8,6 @@ venv/
 pics/
 .sql
 blacklist.txt
+logs/
+
+
