@@ -1,0 +1,628 @@
+/* ================= Base ================= */
+body {
+  background-color: #1e1e1e;  /* dark page background */
+  color: #f8f9fa;             /* light text for readability */
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.container {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.table-rounded {
+    border-radius: 12px;
+    background-color: #212529; /* Bootstrap dark table base */
+    border: 1px solid #444;
+}
+
+/* Links */
+a {
+    color: #66aaff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* ================= Table Styles ================= */
+.table-container {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.table-sm td,
+.table-sm th {
+    padding: .3rem .4rem;
+}
+
+/* desktop table visible by default */
+.listings-table-wrap {
+    display: block;       /* allows scrolling */
+    overflow-x: auto;
+}
+
+.table-scroll {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+.listings-table {
+    width: 100%;
+    min-width: 600px;
+    border-collapse: collapse;
+}
+
+.listings-table thead th {
+    position: sticky;
+    top: 0;
+    background-color: #212529; /* match Bootstrap table-dark */
+    z-index: 20;
+    box-shadow: 0 2px 2px -1px rgba(0,0,0,0.5);
+}
+
+/* ================= Card Styles ================= */
+.listings-grid {
+    display: none; /* hidden on desktop by default */
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 16px;
+    padding: 16px 0;
+}
+
+.listing-card {
+    border: 1px solid #333;
+    border-radius: 10px;
+    padding: 12px 16px;
+    background-color: #1e1e1e;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.listing-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.5);
+}
+
+.card-row {
+    display: grid;
+    grid-template-columns: 95px 1fr;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.card-row .label {
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.card-row .value {
+    min-width: 0;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+.card-row .value a {
+    word-break: break-word;
+    overflow-wrap: anywhere;
+}
+
+.card-row:last-child {
+    margin-bottom: 0;
+}
+
+/* ================= Responsive Rules ================= */
+@media screen and (max-width: 768px) {
+    /* hide desktop table wrapper entirely */
+    .listings-table-wrap {
+        display: none;
+    }
+
+    /* hide any direct table fallback */
+    .listings-table {
+        display: none;
+    }
+
+    /* show cards on mobile */
+    .listings-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 12px;
+        padding: 12px 0;
+    }
+
+    .listing-card {
+        padding: 12px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .card-row {
+        flex-direction: column;
+        align-items: flex-center;
+        gap: 10px;
+    }
+
+    .card-row .value {
+        margin-top: 2px;
+        text-align: left;
+    }
+}
+
+/* ================= Filters & Sorts ================= */
+.filter-container,
+.sort-container {
+    margin: 12px 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.filter-container label,
+.sort-container label {
+    font-weight: 600;
+    margin-right: 6px;
+}
+
+/* Inputs & selects dark mode */
+input,
+select {
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+    border: 1px solid #333;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+/* Buttons dark mode */
+button {
+    background-color: #333;
+    color: #e0e0e0;
+    border: 1px solid #555;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+button:hover {
+    background-color: #444;
+}
+
+.min-w-cpu {
+  min-width: 220px;
+}
+
+.min-w-storage {
+  min-width: 140px;
+}
+
+.min-w-ram {
+  min-width: 110px;
+}
+
+.min-w-default {
+  min-width: 140px;
+}
+
+/* ================= Navbar ================= */
+.navbar-compact {
+  min-height: 42px;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.navbar-compact .container {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.navbar-compact .navbar-brand {
+  margin-right: 0.75rem;
+  padding-top: 0;
+  padding-bottom: 0;
+  font-size: 0.95rem;
+  line-height: 1.1;
+}
+
+.navbar-compact .navbar-nav {
+  align-items: left;
+}
+
+.navbar-compact .nav-link {
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
+  font-size: 0.9rem;
+  line-height: 1.1;
+}
+
+.navbar-compact {
+  padding: 0.15rem 0.4rem;
+  font-size: 0.9rem;
+}
+
+.navbar .dropdown .btn {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+/* Ensure dropdowns appear above sticky table headers */
+.dropdown-menu {
+    z-index: 1050 !important; /* higher than sticky-top (1020) */
+}
+
+/* ================= Sorting ================= */
+.sort-arrow {
+    display: inline-block;
+    width: 1.2em;      /* fixed space so headers don't jump */
+    text-align: center;
+    font-size: 0.8em;
+    line-height: 1;
+    opacity: 0.8;
+}
+
+/* ================= Price ================= */
+.price-wrap {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.3rem;
+    white-space: nowrap;
+}
+
+.price-main {
+    font-weight: 600;
+}
+
+.price-code {
+    font-size: 0.72em;
+    opacity: 0.8;
+    line-height: 1;
+}
+
+/* price in the heading */
+.price-heading-wrap {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.3rem;
+    white-space: nowrap;
+}
+
+.price-heading-code {
+    font-size: 0.75em;
+    margin-left: 0.35rem;
+    text-transform: uppercase;
+    opacity: 0.8;
+    white-space: nowrap;
+}
+
+.button-text {
+    color: #66aaff;
+}
+
+.button-statistics {
+    color: #daec36;
+}
+
+.discount {
+    color: rgb(50, 220, 50);
+}
+
+.page-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;   /* keeps them on same vertical line */
+    gap: 16px;
+    flex-wrap: wrap;       /* allows stacking on small screens */
+    margin-bottom: 1rem;
+}
+
+.page-title {
+    margin: 0;             /* remove default h1 bottom margin */
+}
+
+.aff-disclaimer-wrap {
+    margin-left: auto;     /* pushes it to the right */
+    text-align: right;
+}
+
+/*================= Available Models Page ==================*/
+
+/* --- ThinkPad Models index page --- */
+
+.series-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1rem 0 1.5rem;
+}
+
+.series-nav a {
+  display: inline-block;
+  padding: 0.4rem 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 999px;
+  background: #fff;
+  color: #333;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.15s ease;
+}
+
+.series-nav a:hover {
+  background: #fe6a6a;
+  border-color: #bbb;
+  text-decoration: none;
+}
+
+/* Series section */
+.model-series {
+  margin-bottom: 2rem;
+}
+
+.model-series h2 {
+  margin: 0 0 0.85rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  border-bottom: 1px solid #e5e5e5;
+  padding-bottom: 0.35rem;
+}
+
+/* Responsive grid */
+.model-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 0.75rem;
+}
+
+/* Card chip */
+.model-chip {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 72px;
+  padding: 0.75rem 0.9rem;
+  border: 1px solid #e2e2e2;
+  border-radius: 12px;
+  background: #222020;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease;
+}
+
+.model-chip:hover {
+  text-decoration: none;
+  color: inherit;
+  border-color: #fe6a6a;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+  transform: translateY(-1px);
+}
+
+.model-name {
+  display: block;
+  font-weight: 700;
+  font-size: 0.98rem;
+  line-height: 1.25;
+  margin-bottom: 0.25rem;
+  word-break: break-word;
+}
+
+.model-last-seen {
+  display: block;
+  font-size: 0.78rem;
+  color: #9d9d9d;
+  line-height: 1.2;
+}
+
+/* for mobile */
+
+@media (max-width: 768px) {
+  .model-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.6rem;
+  }
+
+  .model-chip {
+    min-height: 68px;
+    padding: 0.65rem 0.75rem;
+  }
+
+  .model-name {
+    font-size: 0.95rem;
+  }
+
+  .model-last-seen {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .model-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .model-series h2 {
+    font-size: 1.1rem;
+  }
+}
+
+/* pagination */
+
+.page-num,
+.page-ellipsis {
+  display: inline-block;
+  margin: 0 8px;   /* increase/decrease this */
+}
+
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;   /* controls spacing between all items */
+}
+
+.pagination {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 24px 0;
+}
+
+.pagination a,
+.pagination strong,
+.pagination span {
+  display: inline-block;
+}
+
+.page-num,
+.page-link {
+  padding: 6px 10px;
+  text-decoration: none;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.current-page {
+  padding: 6px 10px;
+  border: 1px solid #333;
+  border-radius: 6px;
+}
+
+.page-ellipsis {
+  padding: 6px 4px;
+}
+
+/*========= model stats ===============*/
+
+.model-price-card {
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+.model-price-card .stat-box {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    padding: 0.6rem 0.75rem;
+    height: 100%;
+}
+
+.model-price-card .stat-label {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #adb5bd;
+    margin-bottom: 0.35rem;
+}
+
+.model-price-card .stat-value {
+    font-size: 1.1rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #fff;
+}
+
+@media (min-width: 768px) {
+    .model-price-card .stat-value {
+        font-size: 1.25rem;
+    }
+}
+
+/*======= navbar for mobile ==========*/
+
+.mobile-bottom-nav {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-bottom-nav {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: #222020;
+    border-top: 1px solid #5c6067;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.06);
+    padding: 6px 6px calc(6px + env(safe-area-inset-bottom));
+  }
+
+  .mobile-bottom-nav a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    text-decoration: none;
+    color: #959494;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 10px;
+  }
+
+  .mobile-bottom-nav a.active {
+    color: #ffffff;
+    background: #505150;
+  }
+
+  /* prevent content being hidden behind the fixed nav */
+  body {
+    padding-bottom: 72px;
+  }
+}
+
+/* Horizontal scroll chips*/
+
+.mobile-filter-scroll {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+.mobile-filter-scroll::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+.mobile-filter-scroll .btn {
+  white-space: nowrap;
+}
+
+.mobile-filter-sheet {
+  height: auto;
+  max-height: 70vh;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+}
+
+.mobile-filter-sheet .offcanvas-body {
+  padding-bottom: calc(1rem + env(safe-area-inset-bottom));
+}
+
+/*======= model search bar =========*/
+
+.search-wrap {
+  flex: 1 1 auto;   /* grow on mobile */
+  min-width: 0;     /* CRITICAL: allows input to shrink instead of wrapping */
+}
+
+.search-wrap .form-control {
+  min-width: 0;     /* helps flex input shrink properly */
+}
+
+@media (min-width: 768px) {
+  .search-wrap {
+    flex: 0 0 300px;   /* fixed compact width on desktop */
+    max-width: 300px;
+  }
+}
+
