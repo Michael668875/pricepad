@@ -9,5 +9,8 @@ pics/
 .sql
 blacklist.txt
 logs/
+# Logs
+**/logs/
+
 
 
